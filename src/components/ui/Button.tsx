@@ -9,7 +9,7 @@ interface Iprops extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = ({ children, className, width = "w-full", ...rest }: Iprops) => {
   return (
     <>
-      <button className={`text-white ${width} p-2 rounded-lg cursor-pointer outline-none${className}`} {...rest}>
+      <button className={`${className} ${width} text-white duration-200 font-medium  p-3 rounded-lg cursor-pointer outline-none`} {...rest}>
         {children}
       </button>
     </>
