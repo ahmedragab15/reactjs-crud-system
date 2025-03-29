@@ -1,3 +1,5 @@
+import { ProductNameTypes } from "../components/types";
+
 export interface IProduct {
   id?: string;
   title: string;
@@ -9,4 +11,10 @@ export interface IProduct {
     name: string;
     imageURL: string;
   };
+}
+export interface IFormInput {
+  id: string;
+  name: ProductNameTypes;
+  label: string;
+  type: string;
 }

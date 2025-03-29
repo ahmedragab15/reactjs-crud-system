@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 // import { useState } from "react";
 
 interface Iprop {
-  isOpen?: boolean;
+  isOpen: boolean;
   close: () => void;
-  title: string;
+  title?: string;
   children:ReactNode
 }
 
