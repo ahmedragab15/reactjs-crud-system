@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react";
 
 interface Iprops extends InputHTMLAttributes<HTMLInputElement> {
-
+bla?:string
 }
 
 const Input = ({...rest}: Iprops) => {
