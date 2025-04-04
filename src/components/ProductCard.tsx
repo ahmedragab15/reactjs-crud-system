@@ -34,14 +34,14 @@ const ProductCard = ({ product, setProductToEdit, openEditModal, index, setProdu
   return (
     <div className="card max-w-sm md:max-w-lg h-[430px] mx-auto md:mx-0 border border-gray-300 rounded-md py-2 px-3 flex justify-between flex-col" id={id}>
       <Image src={imageURL} alt={title} className="rounded-md h-52 w-full object-cover" />
-      <h3 className="text-lg font-semibold py-1">{title}</h3>
-      <p className="text-xs text-gray-500 break-words pb-2">{txtSlicer(description)}</p>
+      <h3 className="text-lg font-semibold py-1 line-clamp-1" title={title}>{title}</h3>
+      <p className="text-xs text-gray-500 break-words pb-2" title={description}>{txtSlicer(description)}</p>
 
       <div className="colors flex items-center flex-wrap space-x-1"> {renderProductColors.length > 0 ? renderProductColors : <span>There's no other colors</span>}</div>
 
       <div className="flex justify-between items-center py-2">
         <span className="price text-lg text-indigo-600 font-semibold">${numberWithCommas(price)}</span>
-        
+
         <div className="category flex items-center gap-1">
           <span className="text-xs font-semibold">{category.name}</span>
           <Image src={category.imageURL} alt={category.name} className="rounded-full w-10 h-10 object-cover" />
