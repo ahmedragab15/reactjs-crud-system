@@ -18,5 +18,6 @@ export const productValidation = (product:  IvalidtionForm ) => {
 
   if (!product.price.trim() || isNaN(Number(product.price))) errors.price = "Valid Price is required";
 
+
   return errors;
 };
