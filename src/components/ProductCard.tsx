@@ -1,7 +1,7 @@
 import Button from "./ui/Button";
 import Image from "./Image";
 import { IProduct } from "../interfaces";
-import { txtSlicer } from "../utils";
+import { txtSlicer, numberWithCommas } from "../utils";
 import CircleColor from "./CircleColor";
 
 interface Iprops {
@@ -40,8 +40,8 @@ const ProductCard = ({ product, setProductToEdit, openEditModal, index, setProdu
       <div className="colors flex items-center flex-wrap space-x-1"> {renderProductColors.length > 0 ? renderProductColors : <span>There's no other colors</span>}</div>
 
       <div className="flex justify-between items-center py-2">
-        <span className="price text-lg text-indigo-600 font-semibold">${price}</span>
-
+        <span className="price text-lg text-indigo-600 font-semibold">${numberWithCommas(price)}</span>
+        
         <div className="category flex items-center gap-1">
           <span className="text-xs font-semibold">{category.name}</span>
           <Image src={category.imageURL} alt={category.name} className="rounded-full w-10 h-10 object-cover" />
@@ -52,7 +52,9 @@ const ProductCard = ({ product, setProductToEdit, openEditModal, index, setProdu
         <Button className=" bg-indigo-600 hover:bg-indigo-700" width="w-full" onClick={onEdit}>
           Edit
         </Button>
-        <Button className=" bg-red-600 hover:bg-red-700" onClick={onRemove}>Remove</Button>
+        <Button className=" bg-[#c2344d] hover:bg-red-700" onClick={onRemove}>
+          Remove
+        </Button>
       </div>
     </div>
   );

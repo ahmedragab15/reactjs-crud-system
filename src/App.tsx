@@ -102,14 +102,13 @@ const App = () => {
     const filtered = products.filter((product) => product.id !== productToEdit.id);
     setProducts(filtered);
     closeConfirmModal();
-    toast.success("Successfully Product Removed!");
+    toast.success("Product has been deleted successfully!");
   };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { title, description, imageURL, price } = productInp;
     const errors = productValidation({ title: title, description: description, imageURL: imageURL, price: price });
-    //*check if one input has error && all inputs has error -> if theres is no error values will be "" and will return true
     const hasErrorMsg = Object.values(errors).some((value) => value === "") && Object.values(errors).every((value) => value === "");
     if (!hasErrorMsg) {
       setErrorsmsg(errors);
@@ -120,28 +119,25 @@ const App = () => {
     setTempColors([]);
     setSelectedCategory(categories[0]);
     closeModal();
-        toast.success("Successfully Product Added!");
+    toast.success("Product has been added successfully!");
   };
   const submitEditHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { title, description, imageURL, price } = productToEdit;
     const errors = productValidation({ title: title, description: description, imageURL: imageURL, price: price });
-    //*check if one input has error && all inputs has error -> if theres is no error values will be "" and will return true
     const hasErrorMsg = Object.values(errors).some((value) => value === "") && Object.values(errors).every((value) => value === "");
     if (!hasErrorMsg) {
       setErrorsmsg(errors);
       return;
     }
 
-    //*Shallow Copy
     const updatedProducts = [...products];
     updatedProducts[productToEditIndex] = { ...productToEdit, colors: tempColors.concat(productToEdit.colors) };
     setProducts(updatedProducts);
-
     setProductToEdit(defaultProductObj);
     setTempColors([]);
     closeEditModal();
-     toast.success("Successfully Product Edited!");
+    toast.success("Product has been updated successfully!");
   };
 
   /* ----- Renders ----- */
@@ -194,8 +190,8 @@ const App = () => {
 
   return (
     <main className="container mx-auto ">
-      <Button className="bg-indigo-600 hover:bg-indigo-700 block mx-auto" onClick={openModal} width="w-fit">
-        Open Modal
+      <Button className="bg-indigo-600 hover:bg-indigo-700 block mx-auto my-6" onClick={openModal} width="w-fit">
+        Create a Product
       </Button>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-5 ">{renderProductList}</div>
       {/* Add Product Modal */}
@@ -206,7 +202,7 @@ const App = () => {
           <div className="colorsHex flex items-center flex-wrap space-x-1"> {renderProductColorsHex}</div>
           <div className="colors flex items-center flex-wrap space-x-1"> {renderProductColors}</div>
           <div className="flex items-center space-x-3">
-            <Button className="text-white bg-indigo-600 hover:bg-indigo-700">Submit </Button>
+            <Button className="text-white bg-indigo-600 hover:bg-indigo-700">Create </Button>
             <Button className="text-black bg-gray-400 hover:bg-gray-500" onClick={onCancel}>
               Cancel
             </Button>
@@ -231,7 +227,7 @@ const App = () => {
             ))}
           </div>
           <div className="flex items-center space-x-3">
-            <Button className="bg-indigo-600 hover:bg-indigo-700">Submit </Button>
+            <Button className="bg-indigo-600 hover:bg-indigo-700">Update</Button>
             <Button className="bg-gray-400 hover:bg-gray-500" onClick={onCancelEditProduct}>
               Cancel
             </Button>
@@ -240,9 +236,9 @@ const App = () => {
       </Modal>
       {/* Delete Product Confirm Modal */}
       <Modal isOpen={isOpenConfirmModal} close={closeConfirmModal} title="Are you sure you want to delete this product?">
-        <span>Deleting this product will remove it permanently from your data</span>
+        <p className="text-sm text-gray-500 leading-snug mb-4">Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action.</p>
         <div className="flex items-center space-x-3">
-          <Button className="bg-red-600 hover:bg-red-800" onClick={removeProductHandler}>
+          <Button className="bg-[#c2344d] hover:bg-red-700" onClick={removeProductHandler}>
             Yes, remove{" "}
           </Button>
           <Button className="bg-gray-400 hover:bg-gray-500" onClick={closeConfirmModal}>
