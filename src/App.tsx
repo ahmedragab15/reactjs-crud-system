@@ -11,6 +11,7 @@ import CircleColor from "./components/CircleColor";
 import { v4 as uuid } from "uuid";
 import Select from "./components/ui/Select";
 import { TProductNames } from "./types";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const defaultProductObj: IProduct = {
@@ -39,7 +40,8 @@ const App = () => {
   const [productToEdit, setProductToEdit] = useState<IProduct>(defaultProductObj);
   const [productToEditIndex, setProductToEditIndex] = useState<number>(0);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-  console.log(productToEditIndex);
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
+
   /* ----- Hanlders ----- */
   const openModal = () => {
     setIsOpen(true);
@@ -55,6 +57,13 @@ const App = () => {
 
   const closeEditModal = () => {
     setIsOpenEditModal(false);
+  };
+  const openConfirmModal = () => {
+    setIsOpenConfirmModal(true);
+  };
+
+  const closeConfirmModal = () => {
+    setIsOpenConfirmModal(false);
   };
 
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -88,6 +97,14 @@ const App = () => {
     setProductToEdit(defaultProductObj);
     closeEditModal();
   };
+
+  const removeProductHandler = () => {
+    const filtered = products.filter((product) => product.id !== productToEdit.id);
+    setProducts(filtered);
+    closeConfirmModal();
+    toast.success("Successfully Product Removed!");
+  };
+
   const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { title, description, imageURL, price } = productInp;
@@ -103,6 +120,7 @@ const App = () => {
     setTempColors([]);
     setSelectedCategory(categories[0]);
     closeModal();
+        toast.success("Successfully Product Added!");
   };
   const submitEditHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -123,10 +141,11 @@ const App = () => {
     setProductToEdit(defaultProductObj);
     setTempColors([]);
     closeEditModal();
+     toast.success("Successfully Product Edited!");
   };
 
   /* ----- Renders ----- */
-  const renderProductList = products.map((item, index) => <ProductCard key={item.id} product={item} setProductToEdit={setProductToEdit} openEditModal={openEditModal} index={index} setProductToEditIndex={setProductToEditIndex} />);
+  const renderProductList = products.map((item, index) => <ProductCard key={item.id} product={item} setProductToEdit={setProductToEdit} openEditModal={openEditModal} index={index} setProductToEditIndex={setProductToEditIndex} openConfirmModal={openConfirmModal} />);
 
   const renderFormInputList = FormInputsList.map((input) => (
     <div className="flex flex-col" key={input.id}>
@@ -137,7 +156,7 @@ const App = () => {
       <ErrorMessage msg={errorsmsg[input.name]} />
     </div>
   ));
-  const renderProductColors = Colors.map((color) => ( 
+  const renderProductColors = Colors.map((color) => (
     <CircleColor
       key={color}
       color={color}
@@ -198,12 +217,11 @@ const App = () => {
       {/* Edit Product Modal */}
       <Modal isOpen={isOpenEditModal} close={closeEditModal} title="Edit the Product">
         <form className="space-y-3" onSubmit={submitEditHandler}>
-
           {renderProductEdit("title", "Product title", "title")}
           {renderProductEdit("description", "Product description", "description")}
           {renderProductEdit("imageURL", "Product image URL", "imageURL")}
           {renderProductEdit("price", "Product price", "price")}
-          <Select selected={productToEdit.category} setSelected={(value)=> setProductToEdit({ ...productToEdit, category: value })} />
+          <Select selected={productToEdit.category} setSelected={(value) => setProductToEdit({ ...productToEdit, category: value })} />
           <div className="colors flex items-center flex-wrap space-x-1"> {renderProductColors}</div>
           <div className="colorsHex flex items-center flex-wrap space-x-1">
             {tempColors.concat(productToEdit.colors).map((color) => (
@@ -220,6 +238,19 @@ const App = () => {
           </div>
         </form>
       </Modal>
+      {/* Delete Product Confirm Modal */}
+      <Modal isOpen={isOpenConfirmModal} close={closeConfirmModal} title="Are you sure you want to delete this product?">
+        <span>Deleting this product will remove it permanently from your data</span>
+        <div className="flex items-center space-x-3">
+          <Button className="bg-red-600 hover:bg-red-800" onClick={removeProductHandler}>
+            Yes, remove{" "}
+          </Button>
+          <Button className="bg-gray-400 hover:bg-gray-500" onClick={closeConfirmModal}>
+            Cancel
+          </Button>
+        </div>
+      </Modal>
+      <Toaster position="top-left" reverseOrder={false} />
     </main>
   );
 };

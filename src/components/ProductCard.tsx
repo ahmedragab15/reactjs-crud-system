@@ -10,9 +10,10 @@ interface Iprops {
   openEditModal: () => void;
   index:number
   setProductToEditIndex: (index: number) => void
+  openConfirmModal: () => void
 }
 
-const ProductCard = ({ product, setProductToEdit, openEditModal,index, setProductToEditIndex }: Iprops) => {
+const ProductCard = ({ product, setProductToEdit, openEditModal, index, setProductToEditIndex, openConfirmModal }: Iprops) => {
   const { description, imageURL, price, title, id, colors, category } = product;
 
   /* ----- Renders ----- */
@@ -23,6 +24,11 @@ const ProductCard = ({ product, setProductToEdit, openEditModal,index, setProduc
     setProductToEdit(product);
     openEditModal();
     setProductToEditIndex(index);
+  };
+  
+  const onRemove = () => {
+    setProductToEdit(product);
+    openConfirmModal();
   };
 
   return (
@@ -46,7 +52,7 @@ const ProductCard = ({ product, setProductToEdit, openEditModal,index, setProduc
         <Button className=" bg-indigo-600 hover:bg-indigo-700" width="w-full" onClick={onEdit}>
           Edit
         </Button>
-        <Button className=" bg-red-600 hover:bg-red-700">Remove</Button>
+        <Button className=" bg-red-600 hover:bg-red-700" onClick={onRemove}>Remove</Button>
       </div>
     </div>
   );
