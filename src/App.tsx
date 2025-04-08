@@ -201,6 +201,9 @@ const App = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-5 ">{renderProductList}</div>
       {/* Add Product Modal */}
       <Modal isOpen={isOpen} close={closeModal} title="Add a New Product">
+        <span className="text-2xl font-medium p-3 cursor-pointer absolute top-1 right-3" onClick={closeModal} title="Close">
+          x
+        </span>
         <form className="space-y-3" onSubmit={submitHandler}>
           {renderFormInputList}
           <Select selected={selectedCategory} setSelected={setSelectedCategory} />
@@ -214,6 +217,9 @@ const App = () => {
 
       {/* Edit Product Modal */}
       <Modal isOpen={isOpenEditModal} close={closeEditModal} title="Edit the Product">
+        <span className="text-2xl font-medium p-3 cursor-pointer absolute top-1 right-3" onClick={closeEditModal} title="Close">
+          x
+        </span>
         <form className="space-y-3" onSubmit={submitEditHandler}>
           {renderProductEdit("title", "Product title", "title")}
           {renderProductEdit("description", "Product description", "description")}
