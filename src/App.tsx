@@ -48,6 +48,13 @@ const App = () => {
   };
 
   const closeModal = () => {
+    setProductInp(defaultProductObj);
+    setErrorsmsg({
+      title: "",
+      description: "",
+      imageURL: "",
+      price: "",
+    });
     setIsOpen(false);
   };
 
@@ -56,6 +63,13 @@ const App = () => {
   };
 
   const closeEditModal = () => {
+    setProductInp(defaultProductObj);
+    setErrorsmsg({
+      title: "",
+      description: "",
+      imageURL: "",
+      price: "",
+    });
     setIsOpenEditModal(false);
   };
   const openConfirmModal = () => {
@@ -87,15 +101,6 @@ const App = () => {
       ...errorsmsg,
       [name]: "",
     });
-  };
-
-  const onCancel = () => {
-    setProductInp(defaultProductObj);
-    closeModal();
-  };
-  const onCancelEditProduct = () => {
-    setProductToEdit(defaultProductObj);
-    closeEditModal();
   };
 
   const removeProductHandler = () => {
@@ -203,9 +208,6 @@ const App = () => {
           <div className="colors flex items-center flex-wrap space-x-1"> {renderProductColors}</div>
           <div className="flex items-center space-x-3">
             <Button className="text-white bg-indigo-600 hover:bg-indigo-700">Create </Button>
-            <Button className="text-black bg-gray-400 hover:bg-gray-500" onClick={onCancel}>
-              Cancel
-            </Button>
           </div>
         </form>
       </Modal>
@@ -228,9 +230,6 @@ const App = () => {
           </div>
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-600 hover:bg-indigo-700">Update</Button>
-            <Button className="bg-gray-400 hover:bg-gray-500" onClick={onCancelEditProduct}>
-              Cancel
-            </Button>
           </div>
         </form>
       </Modal>
