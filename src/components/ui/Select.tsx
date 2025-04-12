@@ -1,5 +1,3 @@
-"use client";
-
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { ChevronsUpDown, Check } from "lucide-react";
 import { categories } from "../../data";
@@ -10,9 +8,7 @@ interface Iprops {
   setSelected: (category: ICategory) => void
 }
 
-
 const Select = ({ selected, setSelected }: Iprops) => {
-
 
   return (
     <Listbox value={selected} onChange={setSelected}>
