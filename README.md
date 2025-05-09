@@ -1,59 +1,53 @@
-# React + TypeScript + Tailwind + Vite
+# 🛒 Product Management App (React + TypeScript)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic and fully interactive **Product CRUD (Create, Read, Update, Delete)** application built using **React**, **TypeScript**, and **Tailwind CSS**. It provides a clean, responsive UI to manage products with rich features such as validation, toast notifications, modal forms, color/category selection, and more.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React** – UI library for building user interfaces
+- **TypeScript** – Strong typing and scalability
+- **Tailwind CSS** – Utility-first CSS framework
+- **react-hot-toast** – Lightweight toast notifications
+- **uuid** – Unique product ID generation
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Features
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### ✅ Create Product
+- Modal form with input fields for title, description, image URL, and price.
+- Color selection and category dropdown.
+- Form validation with error messages.
+- Generates a unique product ID using `uuid`.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### ✅ Read Products
+- Display all products in a responsive grid layout.
+- ProductCard component for clean representation.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### ✅ Update Product
+- Edit modal with pre-filled data.
+- Allows color and category updates.
+- Dynamic validation before submitting changes.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### ✅ Delete Product
+- Confirmation modal before deletion.
+- Removes the product from the list on confirmation.
+
+### ✅ Toast Notifications
+- Displays success messages for Add, Edit, and Delete actions.
+
+### ✅ Form Validation
+- Ensures required fields are not empty.
+- Error messages shown beside respective fields.
+
+---
+
+## 📸 Preview
+
+![Screenshot](./preview.png)
+
+---
 
 ## 🚀 Live Demo  
 
 [🔗 Live Demo Here](https://reactjs-crud-system.netlify.app)  
-
