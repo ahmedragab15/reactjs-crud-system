@@ -26,7 +26,12 @@ const App = () => {
     },
   };
   /* ----- State ----- */
-  const [isOpen, setIsOpen] = useState(false);
+  /* - Modal - */
+  const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [isOpenRemoveModal, setIsOpenRemoveModal] = useState(false);
+
+  const [products, setProducts] = useState<IProduct[]>(ProductList);
   const [productInp, setProductInp] = useState<IProduct>(defaultProductObj);
   const [errorsmsg, setErrorsmsg] = useState<IvalidtionForm>({
     title: "",
@@ -35,19 +40,16 @@ const App = () => {
     price: "",
   });
   const [tempColors, setTempColors] = useState<string[]>([]);
-  const [products, setProducts] = useState<IProduct[]>(ProductList);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [productToEdit, setProductToEdit] = useState<IProduct>(defaultProductObj);
   const [productToEditIndex, setProductToEditIndex] = useState<number>(0);
-  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
 
   /* ----- Hanlders ----- */
-  const openModal = () => {
-    setIsOpen(true);
+  const openAddModal = () => {
+    setIsOpenAddModal(true);
   };
 
-  const closeModal = () => {
+  const closeAddModal = () => {
     setProductInp(defaultProductObj);
     setErrorsmsg({
       title: "",
@@ -55,7 +57,7 @@ const App = () => {
       imageURL: "",
       price: "",
     });
-    setIsOpen(false);
+    setIsOpenAddModal(false);
   };
 
   const openEditModal = () => {
@@ -72,15 +74,16 @@ const App = () => {
     });
     setIsOpenEditModal(false);
   };
+
   const openConfirmModal = () => {
-    setIsOpenConfirmModal(true);
+    setIsOpenRemoveModal(true);
   };
 
   const closeConfirmModal = () => {
-    setIsOpenConfirmModal(false);
+    setIsOpenRemoveModal(false);
   };
 
-  const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onChangeAddHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setProductInp({
       ...productInp,
@@ -91,6 +94,7 @@ const App = () => {
       [name]: "",
     });
   };
+
   const onChangeEditHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setProductToEdit({
@@ -123,9 +127,10 @@ const App = () => {
     setProductInp(defaultProductObj);
     setTempColors([]);
     setSelectedCategory(categories[0]);
-    closeModal();
+    closeAddModal();
     toast.success("Product has been added successfully!");
   };
+
   const submitEditHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { title, description, imageURL, price } = productToEdit;
@@ -153,10 +158,11 @@ const App = () => {
       <label className="mb-[2px] text-sm font-medium text-gray-700" htmlFor={input.id}>
         {input.label}
       </label>
-      <Input type={input.type} name={input.name} id={input.id} value={productInp[input.name]} onChange={onChangeHandler} />
+      <Input type={input.type} name={input.name} id={input.id} value={productInp[input.name]} onChange={onChangeAddHandler} />
       <ErrorMessage msg={errorsmsg[input.name]} />
     </div>
   ));
+
   const renderProductColors = Colors.map((color) => (
     <CircleColor
       key={color}
@@ -195,13 +201,16 @@ const App = () => {
 
   return (
     <main className="container mx-auto ">
-      <Button className="bg-indigo-600 hover:bg-indigo-700 block mx-auto my-6" onClick={openModal} width="w-fit">
+      <Button className="bg-indigo-600 hover:bg-indigo-700 block mx-auto my-6" onClick={openAddModal} width="w-fit">
         Create a Product
       </Button>
+
+      {/* Products */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-5 ">{renderProductList}</div>
+
       {/* Add Product Modal */}
-      <Modal isOpen={isOpen} close={closeModal} title="Add a New Product">
-        <span className="text-2xl font-medium p-3 cursor-pointer absolute top-1 right-3" onClick={closeModal} title="Close">
+      <Modal isOpen={isOpenAddModal} close={closeAddModal} title="Add a New Product">
+        <span className="text-2xl font-medium p-3 cursor-pointer absolute top-1 right-3" onClick={closeAddModal} title="Close">
           x
         </span>
         <form className="space-y-3" onSubmit={submitHandler}>
@@ -239,8 +248,9 @@ const App = () => {
           </div>
         </form>
       </Modal>
+
       {/* Delete Product Confirm Modal */}
-      <Modal isOpen={isOpenConfirmModal} close={closeConfirmModal} title="Are you sure you want to delete this product?">
+      <Modal isOpen={isOpenRemoveModal} close={closeConfirmModal} title="Are you sure you want to delete this product?">
         <p className="text-sm text-gray-500 leading-snug mb-4">Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action.</p>
         <div className="flex items-center space-x-3">
           <Button className="bg-[#c2344d] hover:bg-red-700" onClick={removeProductHandler}>
@@ -251,6 +261,7 @@ const App = () => {
           </Button>
         </div>
       </Modal>
+      
       <Toaster position="top-left" reverseOrder={false} />
     </main>
   );
